@@ -1,0 +1,15 @@
+/* Seu código original pode conviver aqui */
+.cidade-page-container {
+    margin: 0 230px;
+    margin-top: 120px;
+}
+
+/* Personalização do Login */
+.form-control:focus {
+    border-color: #1a182e;
+    box-shadow: 0 0 0 0.25rem rgba(26, 24, 46, 0.25);
+}
+
+body {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}

@@ -1,0 +1,13 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'Smarko_App/style.css' %}">
+</head>
+<body>
+    <div class="cidade-page-container">
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Registrar</a>
+    </div>
+</body>
+</html>
