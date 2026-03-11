@@ -84,9 +84,21 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # Tipo de campo de ID padrão
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# --- CONFIGURAÇÕES DE SEGURANÇA (ENTREGA 2 - TFC SMARKO) ---
+
+# Requisito 1.1: Uso de hash criptográfico seguro (Bcrypt) 
 PASSWORD_HASHERS = [
-    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher', 
-    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
-    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
-    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
 ]
+
+# Requisito 1.9: Gestão de Sessão com tempo de expiração [cite: 91]
+# Expira em 20 minutos (1200 segundos) de inatividade
+SESSION_COOKIE_AGE = 1200
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# Requisito 1.5/1.6: Suporte para envio do código 2FA [cite: 90]
+# Em desenvolvimento, o código aparecerá no seu terminal (console)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"

@@ -1,62 +1,52 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro | Smarko</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'Smarko_App/style.css' %}">
-</head>
-<body class="bg-light">
+{% extends 'Smarko_App/base.html' %}
 
-<div class="container">
-    <div class="row min-vh-100 align-items-center justify-content-center py-5">
-        <div class="col-10 col-sm-8 col-md-7 col-lg-5">
-            <div class="card shadow border-0">
-                <div class="card-body p-5">
-                    <h2 class="text-center mb-2 fw-bold" style="color: #1a182e;">Criar Conta</h2>
-                    <p class="text-center text-muted mb-4">Junte-se ao projeto Smarko</p>
-                    
-                    <form method="post">
-                        {% csrf_token %}
-                        
-                        <form method="POST"> {% csrf_token %}
-                            <label for="username" class="form-label">Usuário</label>
-                            <input type="text" name="username" id="username" class="form-control" placeholder="Escolha um nome de usuário" required>
-                        </form>
+{% block title %}Criar Conta | Smarko{% endblock %}
 
-                        <div class="mb-3">
-                            <label for="email" class="form-label">E-mail</label>
-                            <input type="email" name="email" id="email" class="form-control" placeholder="exemplo@email.com" required>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="password" class="form-label">Senha</label>
-                                <input type="password" name="password" id="password" class="form-control" placeholder="********" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="confirm_password" class="form-label">Confirmar Senha</label>
-                                <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="********" required>
-                            </div>
-                        </div>
-
-                        <div class="d-grid mt-3">
-                            <button type="submit" class="btn btn-primary btn-lg" style="background-color: #1a182e; border: none;">
-                                Cadastrar agora
-                            </button>
-                        </div>
-                    </form>
-
-                    <div class="text-center mt-4">
-                        <p class="small mb-0">Já tem uma conta? <a href="/login" style="color: #1a182e; font-weight: bold; text-decoration: none;">Faça login</a></p>
+{% block content %}
+<section class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-5">
+            <article class="card card-animate p-4 p-md-5 animate__animated animate__zoomIn">
+                <header class="text-center mb-4">
+                    <div class="icon-circle bg-light d-inline-flex p-3 rounded-circle mb-3">
+                        <i class="bi bi-shield-lock-fill text-primary" style="font-size: 2rem;"></i>
                     </div>
-                </div>
-            </div>
+                    <h1 class="h3 fw-bold">Crie sua conta</h1>
+                    <p class="text-muted small">Segurança Bcrypt ativa por padrão.</p>
+                </header>
+
+                <form method="POST" novalidate>
+                    {% csrf_token %}
+                    <div class="form-floating mb-3">
+                        <input type="text" name="usuario" id="userField" class="form-control rounded-3" placeholder="Usuário" required>
+                        <label for="userField">Nome de Usuário</label>
+                    </div>
+                    
+                    <div class="form-floating mb-3">
+                        <input type="email" name="email" id="emailField" class="form-control rounded-3" placeholder="email@exemplo.com" required>
+                        <label for="emailField">E-mail</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="password" name="senha" id="passField" class="form-control rounded-3" placeholder="Senha" required>
+                        <label for="passField">Senha</label>
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <input type="password" name="confirmacao" id="confirmField" class="form-control rounded-3" placeholder="Confirme" required>
+                        <label for="confirmField">Confirmar Senha</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-custom w-100 fw-bold shadow-sm">
+                        Finalizar Cadastro <i class="bi bi-arrow-right ms-2"></i>
+                    </button>
+                </form>
+
+                <footer class="text-center mt-4">
+                    <p class="small text-muted">Já é membro? <a href="{% url 'login' %}" class="fw-bold text-primary">Acesse aqui</a></p>
+                </footer>
+            </article>
         </div>
     </div>
-</div>
-
-</body>
-</html>
+</section>
+{% endblock %}
