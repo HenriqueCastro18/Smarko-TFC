@@ -1,4 +1,3 @@
-/* Layout Base e Responsividade */
 .cidade-page-container {
     margin: 0 230px;
     margin-top: 120px;
@@ -15,7 +14,6 @@
     margin-bottom: 20px;
 }
 
-/* Componentes de Autenticação */
 .card-auth {
     border: none;
     border-radius: 15px;
@@ -40,13 +38,11 @@
     color: white;
 }
 
-/* Utilitários */
 .letter-spacing-lg {
     letter-spacing: 0.5rem;
     font-size: 1.5rem;
 }
 
-/* Media Queries para Responsividade */
 @media (max-width: 1128px) { .cidade-page-container { margin: 0 155px; margin-top: 120px; } }
 @media (max-width: 997px) { .cidade-page-container { margin: 0 90px; margin-top: 120px; } }
 @media (max-width: 646px) { .cidade-page-container { margin: 0 40px; margin-top: 120px; } }

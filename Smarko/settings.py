@@ -1,18 +1,15 @@
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
-# Caminho base do projeto
+load_dotenv()
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SEGURANÇA: Mantenha a Secret Key em segredo em produção!
-SECRET_KEY = 'django-insecure-substitua-isso-por-uma-chave-real-se-for-pro-ar'
-
-# SEGURANÇA: Não rode com DEBUG True em produção!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# Definição das Apps
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -20,8 +17,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    # Seu App registrado aqui
+
     'Smarko_App',
 ]
 
@@ -55,7 +51,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Smarko.wsgi.application'
 
-# Banco de Dados (SQLite por padrão para desenvolvimento)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -63,7 +58,6 @@ DATABASES = {
     }
 }
 
-# Validação de Senhas
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
@@ -71,34 +65,38 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
 ]
 
-# Internacionalização (Ajustado para Português do Brasil)
+
 LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
 USE_TZ = True
 
-# Arquivos Estáticos (CSS, JavaScript, Imagens)
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-# Tipo de campo de ID padrão
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# --- CONFIGURAÇÕES DE SEGURANÇA (ENTREGA 2 - TFC SMARKO) ---
-
-# Requisito 1.1: Uso de hash criptográfico seguro (Bcrypt) 
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
 ]
 
-# Requisito 1.9: Gestão de Sessão com tempo de expiração [cite: 91]
-# Expira em 20 minutos (1200 segundos) de inatividade
+PASSWORD_RESET_TIMEOUT = 120
 SESSION_COOKIE_AGE = 1200
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-# Requisito 1.5/1.6: Suporte para envio do código 2FA [cite: 90]
-# Em desenvolvimento, o código aparecerá no seu terminal (console)
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+# Ele vai ler o que você escreveu depois do "=" no seu arquivo .env
+EMAIL_HOST_USER = os.getenv('EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASS')
+DEFAULT_FROM_EMAIL = f"Smarko Security <{os.getenv('EMAIL_USER')}>"
+SECRET_KEY = os.getenv('SECRET_KEY')
+
+EMAIL_CONFIRMATION_SUBJECT = "Recuperação de Senha - Smarko"
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
