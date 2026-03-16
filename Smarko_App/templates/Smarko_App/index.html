@@ -9,11 +9,7 @@
             <h1 class="display-4 fw-bold">Bem-vindo, {{ user.username }}!</h1>
             <p class="lead text-muted">Sua sessão está protegida com criptografia <strong>Bcrypt</strong>.</p>
         </div>
-        <div class="col-lg-4 text-center text-lg-end">
-            <a href="{% url 'logout' %}" class="btn btn-outline-danger rounded-pill px-4">
-                <i class="bi bi-box-arrow-right me-2"></i>Encerrar Sessão
-            </a>
-        </div>
+       
     </header>
 
     <div class="row g-4 justify-content-center">
