@@ -69,4 +69,6 @@ Para facilitar o desenvolvimento e a instalação, utilize os scripts `.bat` inc
 
 ## 👤 Autor
 
-* **Henrique Castro** **Victor Fozato** **Rafael Barbosa** 
+**Henrique Castro**
+**Victor Fozato** 
+**Rafael Barbosa** 
