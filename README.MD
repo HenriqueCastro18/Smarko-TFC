@@ -1,7 +1,7 @@
 # 🛡️ Smarko - Autenticação Defensiva
 
 ## 📌 Sobre o Projeto
-****O Smarko é um sistema de automação comercial focado no gerenciamento de mercados. O grande diferencial desta aplicação é a sua arquitetura robusta de segurança e autenticação, garantindo a integridade dos dados e o controle rigoroso de acesso dos usuários.**
+**O Smarko é um sistema de automação comercial focado no gerenciamento de mercados. O grande diferencial desta aplicação é a sua arquitetura robusta de segurança e autenticação, garantindo a integridade dos dados e o controle rigoroso de acesso dos usuários.**
 
 > **Status do Projeto:** 🛠️ Em Desenvolvimento / TFC (Trabalho de Final de Curso)
 
