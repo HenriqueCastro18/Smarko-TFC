@@ -13,13 +13,13 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('verificar-2fa/', views.verificar_2fa_view, name='verificar_2fa'),
 
-    # 1. Esqueci a Senha - Formulário para digitar o e-mail
+    # 1. Esqueci a Senha - Agora utilizando a View customizada para gerar LOGS
     path('reset_password/', 
-         auth_views.PasswordResetView.as_view(
+         views.CustomPasswordResetView.as_view( # <-- Alterado para usar a sua classe do views.py
              template_name="Smarko_App/password_reset.html",
              subject_template_name="Smarko_App/password_reset_subject.txt",
              email_template_name="Smarko_App/password_reset_email.html", 
-             html_email_template_name="Smarko_App/password_reset_email.html" # HTML para layout com botão
+             html_email_template_name="Smarko_App/password_reset_email.html"
          ), 
          name="reset_password"),
 

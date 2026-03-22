@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.utils import timezone
 from datetime import timedelta
 from django.core.mail import send_mail
+from django.contrib.auth.views import PasswordResetView # Import necessário para o Log
 from .models import PerfilUsuario, LogSeguranca
 
 
@@ -18,6 +19,26 @@ def get_client_ip(request):
     else:
         ip = request.META.get('REMOTE_ADDR')
     return ip
+
+
+class CustomPasswordResetView(PasswordResetView):
+    """Sobrescreve a view de reset para registrar a solicitação em log (Requisito Auditoria)."""
+    def form_valid(self, form):
+        # Executa o envio do e-mail padrão do Django
+        response = super().form_valid(form)
+        
+        # Captura o e-mail digitado
+        email = form.cleaned_data.get('email')
+        user = User.objects.filter(email=email).first()
+        
+        # Registra o evento no LogSeguranca
+        LogSeguranca.objects.create(
+            usuario=user, # Será None se o e-mail não existir na base, o que é seguro
+            evento=f"Solicitação de recuperação de senha para: {email}",
+            ip=get_client_ip(self.request)
+        )
+        
+        return response
 
 
 def register_view(request):
@@ -56,7 +77,6 @@ def login_view(request):
     """Login com Bloqueio (1.11), Auditoria (4.5) e Envio de 2FA por E-mail."""
 
     if request.method == "POST":
-
         usuario = request.POST.get('username')
         senha_digitada = request.POST.get('password')
         ip_atual = get_client_ip(request)
@@ -71,7 +91,6 @@ def login_view(request):
                 evento=f"Tentativa: Usuário Inexistente ({usuario})",
                 ip=ip_atual
             )
-
             messages.error(request, "Utilizador ou senha incorretos.")
             return render(request, 'Smarko_App/login.html')
 
@@ -83,13 +102,11 @@ def login_view(request):
         user_auth = authenticate(request, username=usuario, password=senha_digitada)
 
         if user_auth is not None:
-
             perfil.tentativas_falhas = 0
             perfil.bloqueado_ate = None
             perfil.save()
 
             # PROTEÇÃO CONTRA SPAM DE EMAIL
-
             ultimo_envio = request.session.get('ultimo_email_2fa')
 
             if ultimo_envio and time.time() - ultimo_envio < 120:
@@ -102,17 +119,13 @@ def login_view(request):
             request.session['codigo_2fa'] = codigo
             request.session['user_id_pre_auth'] = user_auth.id
             request.session['codigo_2fa_timestamp'] = time.time()
-
             request.session['ultimo_email_2fa'] = time.time()
 
             print(f"\n[SISTEMA] CÓDIGO 2FA PARA {usuario}: {codigo}\n")
 
             if user_auth.email:
-
                 assunto = f"{codigo} é o seu código de acesso Smarko"
-
                 corpo_texto = f"Olá {usuario}, seu código de verificação é: {codigo}"
-
                 corpo_html = f"""
                 <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
                     <div style="background-color: #1a182e; padding: 20px; text-align: center;">
@@ -121,13 +134,11 @@ def login_view(request):
                     <div style="padding: 30px;">
                         <p>Olá <strong>{usuario}</strong>,</p>
                         <p>Seu código de verificação é:</p>
-
                         <div style="background:#f4f4f9;padding:20px;text-align:center;border-radius:6px;margin:20px 0;">
                             <span style="font-size:32px;font-weight:bold;letter-spacing:5px;color:#1a182e;">
                                 {codigo}
                             </span>
                         </div>
-
                         <p style="font-size:14px;color:#666;text-align:center;">
                         Este código expira em <strong>2 minutos</strong>.
                         </p>
@@ -144,9 +155,7 @@ def login_view(request):
                         fail_silently=False,
                         html_message=corpo_html
                     )
-
                 except Exception as e:
-
                     LogSeguranca.objects.create(
                         usuario=user_auth,
                         evento=f"Falha SMTP: {str(e)[:100]}",
@@ -156,9 +165,7 @@ def login_view(request):
             return redirect('verificar_2fa')
 
         else:
-
             perfil.tentativas_falhas += 1
-
             LogSeguranca.objects.create(
                 usuario=user,
                 evento=f"Falha de Login (Tentativa {perfil.tentativas_falhas})",
@@ -168,7 +175,6 @@ def login_view(request):
             if perfil.tentativas_falhas >= 3:
                 perfil.bloqueado_ate = timezone.now() + timedelta(minutes=5)
                 messages.error(request, "Muitas tentativas. Bloqueado por 5 min.")
-
             else:
                 messages.error(request, f"Senha incorreta! Tentativa {perfil.tentativas_falhas} de 3.")
 
@@ -178,7 +184,6 @@ def login_view(request):
 
 
 def verificar_2fa_view(request):
-
     codigo_real = request.session.get('codigo_2fa')
     user_id = request.session.get('user_id_pre_auth')
     timestamp = request.session.get('codigo_2fa_timestamp', 0)
@@ -187,15 +192,12 @@ def verificar_2fa_view(request):
         return redirect('login')
 
     if request.method == "POST":
-
         if time.time() - timestamp > 120:
             messages.error(request, "Código expirado.")
             return redirect('login')
 
         if request.POST.get('codigo') == codigo_real:
-
             user = User.objects.get(id=user_id)
-
             auth_login(request, user)
 
             LogSeguranca.objects.create(
@@ -205,17 +207,14 @@ def verificar_2fa_view(request):
             )
 
             request.session.pop('codigo_2fa', None)
-
             return redirect('home')
 
         else:
-
             LogSeguranca.objects.create(
                 usuario=User.objects.get(id=user_id),
                 evento="Falha no Código 2FA",
                 ip=get_client_ip(request)
             )
-
             messages.error(request, "Código incorreto.")
 
     return render(request, 'Smarko_App/verificar_2fa.html')
@@ -228,15 +227,11 @@ def home_view(request):
 
 
 def logout_view(request):
-
     if request.user.is_authenticated:
-
         LogSeguranca.objects.create(
             usuario=request.user,
             evento="Logout Efetuado",
             ip=get_client_ip(request)
         )
-
     logout(request)
-
     return redirect('login')
