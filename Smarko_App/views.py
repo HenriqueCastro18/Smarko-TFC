@@ -179,7 +179,7 @@ def reset_password_view(request):
         ip = get_client_ip(request)
         try:
             action_settings = firebase_auth.ActionCodeSettings(
-                url='https://smarkoo-copia.vercel.app/reset_confirm/',
+                url='https://smarkoo.vercel.app/reset_confirm/',
                 handle_code_in_app=False,
             )
             fb_link = firebase_auth.generate_password_reset_link(email, action_settings)
@@ -193,7 +193,7 @@ def reset_password_view(request):
                     'email': email, 'criado_em': time.time()
                 })
 
-                meu_link = f"https://smarkoo-copia.vercel.app/reset_confirm/?oobCode={oob_code}"
+                meu_link = f"https://smarkoo.vercel.app/reset_confirm/?oobCode={oob_code}"
                 unique_id = time.time()
 
                 html_msg = f"""
