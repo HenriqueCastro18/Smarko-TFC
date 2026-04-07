@@ -1,0 +1,9 @@
+.env
+serviceAccountKey.json
+db.sqlite3
+__pycache__/
+venv/
+staticfiles_build/
+*.pyc
+.vscode/
+.vercel
