@@ -12,6 +12,7 @@
 * [Aviso de Privacidade](Politica_Privacidade.md)
 * [Termos de Uso](Termo_Uso.md)
 * [Inventário de Dados](Inventario_Dados.md)
+* [Tratamento de Dados](Dados_de_Dados.md)
 
 ---
 
