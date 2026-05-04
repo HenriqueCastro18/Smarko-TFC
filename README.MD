@@ -7,6 +7,14 @@
 
 ---
 
+## ⚖️ Conformidade e Privacidade
+* [Política de Cookies](Politica_Cookies.md)
+* [Aviso de Privacidade](Politica_Privacidade.md)
+* [Termos de Uso](Termo_Uso.md)
+* [Inventário de Dados](Inventario_Dados.md)
+
+---
+
 ## 🚀 Tech Stack
 
 O projeto utiliza tecnologias de ponta para garantir performance e integridade dos dados:
