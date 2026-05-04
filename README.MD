@@ -13,8 +13,8 @@
 * [Termos de Uso](./docs/Termo_Uso.md)
 * [Inventário de Dados](./docs/Inventario_Dados.md)
 * [Tratamento de Dados](./docs/Tratamento_de_Dados.md)
-* [Relatorio de impacto a proteção de dados](./docs/Relatorio de impacto a proteção de dados.md)
-* [Politica de Segurança da informação](./docs/Politica de Segurança da informação.md)
+* [Relatorio de impacto a proteção de dados](./docs/Relatorio_de_impacto_a_proteção_de_dados.md)
+* [Politica de Segurança da informação](./docs/Politica_de_Segurança_da_informação.md)
 
 ---
 
