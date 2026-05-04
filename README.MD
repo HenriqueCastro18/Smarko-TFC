@@ -8,11 +8,13 @@
 ---
 
 ## ⚖️ Conformidade e Privacidade
-* [Política de Cookies](Politica_Cookies.md)
-* [Aviso de Privacidade](Politica_Privacidade.md)
-* [Termos de Uso](Termo_Uso.md)
-* [Inventário de Dados](Inventario_Dados.md)
-* [Tratamento de Dados](Tratamento_de_Dados.md)
+* [Política de Cookies](./docs/Politica_Cookies.md)
+* [Aviso de Privacidade](./docs/Politica_Privacidade.md)
+* [Termos de Uso](./docs/Termo_Uso.md)
+* [Inventário de Dados](./docs/Inventario_Dados.md)
+* [Tratamento de Dados](./docs/Tratamento_de_Dados.md)
+* [Relatorio de impacto a proteção de dados](./docs/Relatorio de impacto a proteção de dados.md)
+* [Politica de Segurança da informação](./docs/Politica de Segurança da informação.md)
 
 ---
 
